@@ -12,7 +12,7 @@ import com.codespace.exchange.exception.ResourceNotFoundException;
  */
 public interface ExchangeRateService {
 
-	public void saveAll(List<Rate> rates);
+	public boolean saveAll(List<Rate> rates);
 
 	public RateDTO getRate(String base, String symbol) throws ResourceNotFoundException;
 

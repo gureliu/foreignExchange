@@ -1,6 +1,7 @@
 package com.codespace.exchange.calculator;
 
 /**
+ * Enum factory
  * 
  * @author ugureli
  *
@@ -19,7 +20,7 @@ public enum CalculatorFactory {
 	public Calculator getCalculator(CalculatorType name) {
 		switch (name) {
 		case RATE:
-			return new RateConverter();
+			return new RateCalculator();
 		default:
 			break;
 		}

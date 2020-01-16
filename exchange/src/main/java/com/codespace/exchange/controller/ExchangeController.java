@@ -26,6 +26,8 @@ import com.codespace.exchange.service.ConversionService;
 import com.codespace.exchange.service.ExchangeRateService;
 
 /**
+ * Rest Controller.
+ * 
  * @author ugureli
  *
  */
@@ -48,17 +50,17 @@ public class ExchangeController {
 		return conversionService.convert(param);
 	}
 
-	@GetMapping("/listConversions/{page}/{size}")
-	public List<ConversionDetailDTO> listConversions(@PathVariable int page, @PathVariable int size, @RequestParam Optional<Long> transactionId,
+	@GetMapping("/conversions/{page}/{size}")
+	public List<ConversionDetailDTO> getConvertions(@PathVariable int page, @PathVariable int size, @RequestParam Optional<Long> transactionId,
 			@RequestParam @Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Optional<Date> transactionDate) throws ResourceNotFoundException, BadRequestException {
 
 		if (!transactionId.isPresent() && !transactionDate.isPresent()) {
 			throw new BadRequestException("Either transactionId or transactionDate shall be provided");
 		}
 		if (transactionId.isPresent()) {
-			return conversionService.find(transactionId.get(), null, page, size);
+			return conversionService.findBy(transactionId.get(), null, page, size);
 		}
-		return conversionService.find(null, transactionDate.get(), page, size);
+		return conversionService.findBy(null, transactionDate.get(), page, size);
 	}
 
 }

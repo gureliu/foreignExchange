@@ -19,7 +19,7 @@ public class ConversionParameterDTO implements Serializable {
 	@NotBlank(message = "amount is mandatory")
 	private String symbol;
 	@NotNull(message = "amount is mandatory")
-	@DecimalMin(value = "0.0", inclusive = false,message = "amount can not be less than 0")
+	@DecimalMin(value = "0.0", inclusive = false, message = "amount can not be less than 0")
 	private BigDecimal amount;
 
 	public ConversionParameterDTO(String base, String symbol, BigDecimal amount) {

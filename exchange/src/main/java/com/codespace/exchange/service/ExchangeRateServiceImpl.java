@@ -42,7 +42,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 	 *
 	 */
 	@Override
-	public void saveAll(List<Rate> rates) {
+	public boolean saveAll(List<Rate> rates) {
 		for (Rate rate : rates) {
 			Optional<Rate> data = repository.findByBaseAndSymbol(rate.getBase(), rate.getSymbol());
 			if (data.isPresent()) {
@@ -51,6 +51,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 				repository.save(rate);
 			}
 		}
+		return true;
 	}
 
 	/**

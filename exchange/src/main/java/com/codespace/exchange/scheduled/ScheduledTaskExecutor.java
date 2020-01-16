@@ -16,7 +16,7 @@ import com.codespace.exchange.service.ExchangeRateService;
 @Component
 public class ScheduledTaskExecutor {
 
-	private static final Logger logger = LoggerFactory.getLogger(ExchangeRateProvider.class);
+	private static final Logger logger = LoggerFactory.getLogger(ScheduledTaskExecutor.class);
 
 	private static final int INTERVAL = 300000;
 
@@ -27,8 +27,8 @@ public class ScheduledTaskExecutor {
 
 	@Scheduled(fixedRate = INTERVAL)
 	public void scheduleTaskWithFixedRate() {
-		logger.info("Task loading rates data from fixer.io...");
+		logger.info("Task loading rates from fixer.io...");
 		exchangeRateService.saveAll(exchangeRateProvider.getRates());
-		logger.info("Task saved rates data...");
+		logger.info("Task succcesfully saved rates from fixer.io");
 	}
 }

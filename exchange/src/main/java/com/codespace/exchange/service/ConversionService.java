@@ -16,6 +16,6 @@ public interface ConversionService {
 
 	public ConversionResultDTO convert(ConversionParameterDTO parameter) throws ResourceNotFoundException;
 
-	public List<ConversionDetailDTO> find(Long transactionId, Date transactionDate, int first, int last) throws ResourceNotFoundException;
+	public List<ConversionDetailDTO> findBy(Long transactionId, Date transactionDate, int first, int last) throws ResourceNotFoundException;
 
 }

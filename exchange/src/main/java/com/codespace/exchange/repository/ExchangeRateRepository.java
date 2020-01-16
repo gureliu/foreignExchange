@@ -7,6 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import com.codespace.exchange.entity.Rate;
 
+/**
+ * @author ugureli
+ *
+ */
 @Repository
 public interface ExchangeRateRepository extends JpaRepository<Rate, Long> {
 

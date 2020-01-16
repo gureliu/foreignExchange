@@ -31,7 +31,7 @@ public class Rate {
 	@NotNull(message = "Rate is mandatory")
 	@DecimalMin(value = "0.0", inclusive = false)
 	private BigDecimal rate;
-	
+
 	public Rate() {
 	}
 

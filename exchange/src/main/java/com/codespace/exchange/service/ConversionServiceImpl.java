@@ -71,7 +71,7 @@ public class ConversionServiceImpl implements ConversionService {
 	 *
 	 */
 	@Override
-	public List<ConversionDetailDTO> find(Long transactionId, Date transactionDate, int page, int size) throws ResourceNotFoundException {
+	public List<ConversionDetailDTO> findBy(Long transactionId, Date transactionDate, int page, int size) throws ResourceNotFoundException {
 		Pageable pageable = createPageRequest(page, size);
 		List<Conversion> data = conversionRepository.findByTransactionIdOrTransactionDate(transactionId, transactionDate, pageable);
 		if (data.size() > 0) {

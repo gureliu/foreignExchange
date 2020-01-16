@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.codespace.exchange.entity.Conversion;
 
+/**
+ * @author ugureli
+ *
+ */
 @Repository
 public interface ConversionRepository extends JpaRepository<Conversion, Long> {
 

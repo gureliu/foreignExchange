@@ -6,7 +6,7 @@ import java.math.BigDecimal;
  * @author ugureli
  *
  */
-public class RateConverter extends Calculator {
+public class RateCalculator extends Calculator {
 
 	@Override
 	public BigDecimal convert(BigDecimal amount, BigDecimal rate) {
