@@ -7,8 +7,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.codespace.exchange.dto.RateDTO;
-import com.codespace.exchange.entity.Rate;
+import com.codespace.exchange.dto.RatePairDTO;
+import com.codespace.exchange.entity.RatePair;
 import com.codespace.exchange.exception.ResourceNotFoundException;
 import com.codespace.exchange.repository.ExchangeRateRepository;
 
@@ -29,10 +29,10 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 	 *
 	 */
 	@Override
-	public RateDTO getRate(String base, String symbol) throws ResourceNotFoundException {
-		Optional<Rate> data = repository.findByBaseAndSymbol(base, symbol);
+	public RatePairDTO getRate(String base, String symbol) throws ResourceNotFoundException {
+		Optional<RatePair> data = repository.findByBaseAndSymbol(base, symbol);
 		if (data.isPresent()) {
-			return modelMapper.map(data.get(), RateDTO.class);
+			return modelMapper.map(data.get(), RatePairDTO.class);
 		} else {
 			throw new ResourceNotFoundException("No rate data found for base or symbol");
 		}
@@ -42,9 +42,9 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 	 *
 	 */
 	@Override
-	public boolean saveAll(List<Rate> rates) {
-		for (Rate rate : rates) {
-			Optional<Rate> data = repository.findByBaseAndSymbol(rate.getBase(), rate.getSymbol());
+	public boolean saveAll(List<RatePair> rates) {
+		for (RatePair rate : rates) {
+			Optional<RatePair> data = repository.findByBaseAndSymbol(rate.getBase(), rate.getSymbol());
 			if (data.isPresent()) {
 				repository.save(data.get());
 			} else {
@@ -58,7 +58,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 	 * POC. not used. can be used for non relational db design like nosql dbs
 	 */
 	@Override
-	public void saveAllForNonRelational(List<Rate> rates) {
+	public void saveAllForNonRelational(List<RatePair> rates) {
 		repository.deleteAll();
 		repository.saveAll(rates);
 	}

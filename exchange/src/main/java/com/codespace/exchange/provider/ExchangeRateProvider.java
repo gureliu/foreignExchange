@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.codespace.exchange.dto.FixerExchangeRateDTO;
-import com.codespace.exchange.entity.Rate;
+import com.codespace.exchange.entity.RatePair;
 
 /**
  * Fixer.io data provider
@@ -39,7 +39,7 @@ public class ExchangeRateProvider {
 	/**
 	 * @return
 	 */
-	public List<Rate> getRates() {
+	public List<RatePair> getRates() {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -56,12 +56,12 @@ public class ExchangeRateProvider {
 	 * @param response
 	 * @return
 	 */
-	private List<Rate> convertDTOToDAO(ResponseEntity<FixerExchangeRateDTO> response) {
+	private List<RatePair> convertDTOToDAO(ResponseEntity<FixerExchangeRateDTO> response) {
 		FixerExchangeRateDTO dto = response.getBody();
 		String base = dto.getBase();
 		Map<String, BigDecimal> symbolRates = dto.getRates();
-		List<Rate> list = new ArrayList<Rate>();
-		symbolRates.forEach((k, v) -> list.add(new Rate(base, k, v)));
+		List<RatePair> list = new ArrayList<RatePair>();
+		symbolRates.forEach((k, v) -> list.add(new RatePair(base, k, v)));
 		return list;
 	}
 

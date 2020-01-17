@@ -4,16 +4,19 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author ugureli
  *
  */
-public class ConversionDetailDTO implements Serializable {
+public class ConversionDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long transactionId;
-	private RateDTO rate;
+	private RatePairDTO ratePair;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date transactionDate;
 	private BigDecimal sourceAmount;
 	private BigDecimal targetAmount;
@@ -26,12 +29,12 @@ public class ConversionDetailDTO implements Serializable {
 		this.transactionId = transactionId;
 	}
 
-	public RateDTO getRate() {
-		return rate;
+	public RatePairDTO getRatePair() {
+		return ratePair;
 	}
 
-	public void setRate(RateDTO rate) {
-		this.rate = rate;
+	public void setRatePair(RatePairDTO ratePair) {
+		this.ratePair = ratePair;
 	}
 
 	public Date getTransactionDate() {
@@ -62,7 +65,7 @@ public class ConversionDetailDTO implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((rate == null) ? 0 : rate.hashCode());
+		result = prime * result + ((ratePair == null) ? 0 : ratePair.hashCode());
 		result = prime * result + ((sourceAmount == null) ? 0 : sourceAmount.hashCode());
 		result = prime * result + ((targetAmount == null) ? 0 : targetAmount.hashCode());
 		result = prime * result + ((transactionDate == null) ? 0 : transactionDate.hashCode());
@@ -78,11 +81,11 @@ public class ConversionDetailDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ConversionDetailDTO other = (ConversionDetailDTO) obj;
-		if (rate == null) {
-			if (other.rate != null)
+		ConversionDTO other = (ConversionDTO) obj;
+		if (ratePair == null) {
+			if (other.ratePair != null)
 				return false;
-		} else if (!rate.equals(other.rate))
+		} else if (!ratePair.equals(other.ratePair))
 			return false;
 		if (sourceAmount == null) {
 			if (other.sourceAmount != null)
@@ -109,7 +112,7 @@ public class ConversionDetailDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ConversionDetailDTO [transactionId=" + transactionId + ", rate=" + rate + ", transactionDate=" + transactionDate + ", sourceAmount=" + sourceAmount + ", targetAmount=" + targetAmount
+		return "ConversionDTO [transactionId=" + transactionId + ", ratePair=" + ratePair + ", transactionDate=" + transactionDate + ", sourceAmount=" + sourceAmount + ", targetAmount=" + targetAmount
 				+ "]";
 	}
 

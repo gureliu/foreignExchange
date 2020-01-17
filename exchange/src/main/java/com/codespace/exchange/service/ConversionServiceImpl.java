@@ -18,12 +18,11 @@ import org.springframework.stereotype.Service;
 import com.codespace.exchange.calculator.Calculator;
 import com.codespace.exchange.calculator.CalculatorFactory;
 import com.codespace.exchange.calculator.CalculatorType;
-import com.codespace.exchange.dto.ConversionDetailDTO;
+import com.codespace.exchange.dto.ConversionDTO;
 import com.codespace.exchange.dto.ConversionParameterDTO;
-import com.codespace.exchange.dto.ConversionResultDTO;
-import com.codespace.exchange.dto.RateDTO;
+import com.codespace.exchange.dto.RatePairDTO;
 import com.codespace.exchange.entity.Conversion;
-import com.codespace.exchange.entity.Rate;
+import com.codespace.exchange.entity.RatePair;
 import com.codespace.exchange.exception.ResourceNotFoundException;
 import com.codespace.exchange.repository.ConversionRepository;
 import com.codespace.exchange.repository.ExchangeRateRepository;
@@ -48,20 +47,20 @@ public class ConversionServiceImpl implements ConversionService {
 	 *
 	 */
 	@Override
-	public ConversionResultDTO convert(ConversionParameterDTO conversionDTO) throws ResourceNotFoundException {
-		Optional<Rate> data = exchangeRateRepository.findByBaseAndSymbol(conversionDTO.getBase(), conversionDTO.getSymbol());
+	public ConversionDTO convert(ConversionParameterDTO conversionDTO) throws ResourceNotFoundException {
+		Optional<RatePair> data = exchangeRateRepository.findByBaseAndSymbol(conversionDTO.getBase(), conversionDTO.getSymbol());
 		if (data.isPresent()) {
-			RateDTO rateDTO = modelMapper.map(data.get(), RateDTO.class);
+			RatePairDTO rateDTO = modelMapper.map(data.get(), RatePairDTO.class);
 			BigDecimal rate = rateDTO.getRate();
 			Calculator calculator = CalculatorFactory.INSTANCE.getCalculator(CalculatorType.RATE);
 			BigDecimal targetAmount = calculator.convert(conversionDTO.getAmount(), rate);
 			Conversion conversion = new Conversion();
-			conversion.setRate(data.get());
+			conversion.setRatePair(data.get());
 			conversion.setSourceAmount(conversionDTO.getAmount());
 			conversion.setTargetAmount(targetAmount);
 			conversion.setTransactionDate(Calendar.getInstance().getTime());
 			conversionRepository.save(conversion);
-			return modelMapper.map(conversion, ConversionResultDTO.class);
+			return modelMapper.map(conversion, ConversionDTO.class);
 		} else {
 			throw new ResourceNotFoundException("Base or symbol is not found");
 		}
@@ -71,11 +70,11 @@ public class ConversionServiceImpl implements ConversionService {
 	 *
 	 */
 	@Override
-	public List<ConversionDetailDTO> findBy(Long transactionId, Date transactionDate, int page, int size) throws ResourceNotFoundException {
+	public List<ConversionDTO> findBy(Long transactionId, Date transactionDate, int page, int size) throws ResourceNotFoundException {
 		Pageable pageable = createPageRequest(page, size);
 		List<Conversion> data = conversionRepository.findByTransactionIdOrTransactionDate(transactionId, transactionDate, pageable);
 		if (data.size() > 0) {
-			Type listType = new TypeToken<List<ConversionDetailDTO>>() {
+			Type listType = new TypeToken<List<ConversionDTO>>() {
 			}.getType();
 			return modelMapper.map(data, listType);
 		} else {

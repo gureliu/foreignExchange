@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  *
  */
 @Entity
-public class Rate {
+public class RatePair {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -32,10 +32,10 @@ public class Rate {
 	@DecimalMin(value = "0.0", inclusive = false)
 	private BigDecimal rate;
 
-	public Rate() {
+	public RatePair() {
 	}
 
-	public Rate(@NotBlank(message = "Name is mandatory") @Size(min = 2) String base, @NotBlank(message = "Symbol is mandatory") @Size(min = 2) String symbol,
+	public RatePair(@NotBlank(message = "Name is mandatory") @Size(min = 2) String base, @NotBlank(message = "Symbol is mandatory") @Size(min = 2) String symbol,
 			@NotBlank(message = "Rate is mandatory") @DecimalMin(value = "0.0", inclusive = false) BigDecimal rate) {
 		super();
 		this.base = base;
@@ -94,7 +94,7 @@ public class Rate {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Rate other = (Rate) obj;
+		RatePair other = (RatePair) obj;
 		if (base == null) {
 			if (other.base != null)
 				return false;
@@ -120,7 +120,7 @@ public class Rate {
 
 	@Override
 	public String toString() {
-		return "Rate [id=" + id + ", base=" + base + ", symbol=" + symbol + ", rate=" + rate + "]";
+		return "RatePair [id=" + id + ", base=" + base + ", symbol=" + symbol + ", rate=" + rate + "]";
 	}
 
 }

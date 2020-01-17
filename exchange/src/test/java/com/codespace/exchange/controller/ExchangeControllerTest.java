@@ -17,8 +17,10 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.codespace.exchange.dto.ConversionParameterDTO;
 import com.codespace.exchange.provider.ExchangeRateProvider;
@@ -26,10 +28,9 @@ import com.codespace.exchange.service.ExchangeRateService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * the exception handling tests etc. many of them can be done but in this PoC
+ * the exception handling tests etc. many of them can be done but this is a PoC
  * 
  * @author ugureli
- *
  */
 @SpringBootTest
 @ActiveProfiles("test")
@@ -58,7 +59,10 @@ public class ExchangeControllerTest {
 	@Test
 	@Order(2)
 	public void testRates() throws Exception {
-		this.mockMvc.perform(get("/api/v1/rates/EUR/TRY")).andExpect(status().isOk());
+		this.mockMvc.perform(get("/api/v1/rates/EUR/TRY")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.rate").isNotEmpty());
 	}
 
 	@Test
@@ -66,11 +70,16 @@ public class ExchangeControllerTest {
 	public void testConvert() throws Exception {
 		ConversionParameterDTO dto = new ConversionParameterDTO("EUR", "TRY", BigDecimal.valueOf(80));
 		String writeValueAsString = objectMapper.writeValueAsString(dto);
-		this.mockMvc.perform(post("/api/v1/convert").contentType("application/json").content(writeValueAsString)).andExpect(status().isOk());
+		this.mockMvc.perform(post("/api/v1/convert")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(writeValueAsString))
+				.andExpect(status().isCreated())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.transactionId").isNotEmpty())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.targetAmount").isNotEmpty());
 	}
 
 	/**
-	 * PoC same date will be used.. or it is volatile param so it cant be used
+	 * PoC same date will be used.. otherwise it is volatile param so it cant be used
 	 * 
 	 * @throws Exception
 	 */
@@ -78,6 +87,8 @@ public class ExchangeControllerTest {
 	@Order(4)
 	public void testGetConversions_withTransactionDate() throws Exception {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		this.mockMvc.perform(get("/api/v1/conversions/0/20").param("transactionDate", df.format(sampleTDate))).andExpect(status().isOk());
+		this.mockMvc.perform(get("/api/v1/conversions/0/20")
+				.param("transactionDate", df.format(sampleTDate)))
+				.andExpect(status().isOk());
 	}
 }

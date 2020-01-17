@@ -2,8 +2,8 @@ package com.codespace.exchange.service;
 
 import java.util.List;
 
-import com.codespace.exchange.dto.RateDTO;
-import com.codespace.exchange.entity.Rate;
+import com.codespace.exchange.dto.RatePairDTO;
+import com.codespace.exchange.entity.RatePair;
 import com.codespace.exchange.exception.ResourceNotFoundException;
 
 /**
@@ -12,9 +12,9 @@ import com.codespace.exchange.exception.ResourceNotFoundException;
  */
 public interface ExchangeRateService {
 
-	public boolean saveAll(List<Rate> rates);
+	public boolean saveAll(List<RatePair> rates);
 
-	public RateDTO getRate(String base, String symbol) throws ResourceNotFoundException;
+	public RatePairDTO getRate(String base, String symbol) throws ResourceNotFoundException;
 
-	public void saveAllForNonRelational(List<Rate> rates);
+	public void saveAllForNonRelational(List<RatePair> rates);
 }

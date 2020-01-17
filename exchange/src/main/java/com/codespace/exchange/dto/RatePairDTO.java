@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  * @author ugureli
  *
  */
-public class RateDTO implements Serializable {
+public class RatePairDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String base;
@@ -56,7 +56,7 @@ public class RateDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		RateDTO other = (RateDTO) obj;
+		RatePairDTO other = (RatePairDTO) obj;
 		if (base == null) {
 			if (other.base != null)
 				return false;
@@ -77,7 +77,7 @@ public class RateDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RateDTO [base=" + base + ", symbol=" + symbol + ", rate=" + rate + "]";
+		return "RatePairDTO [base=" + base + ", symbol=" + symbol + ", rate=" + rate + "]";
 	}
 
 }

@@ -3,9 +3,8 @@ package com.codespace.exchange.service;
 import java.util.Date;
 import java.util.List;
 
-import com.codespace.exchange.dto.ConversionDetailDTO;
+import com.codespace.exchange.dto.ConversionDTO;
 import com.codespace.exchange.dto.ConversionParameterDTO;
-import com.codespace.exchange.dto.ConversionResultDTO;
 import com.codespace.exchange.exception.ResourceNotFoundException;
 
 /**
@@ -14,8 +13,8 @@ import com.codespace.exchange.exception.ResourceNotFoundException;
  */
 public interface ConversionService {
 
-	public ConversionResultDTO convert(ConversionParameterDTO parameter) throws ResourceNotFoundException;
+	public ConversionDTO convert(ConversionParameterDTO parameter) throws ResourceNotFoundException;
 
-	public List<ConversionDetailDTO> findBy(Long transactionId, Date transactionDate, int first, int last) throws ResourceNotFoundException;
+	public List<ConversionDTO> findBy(Long transactionId, Date transactionDate, int first, int last) throws ResourceNotFoundException;
 
 }

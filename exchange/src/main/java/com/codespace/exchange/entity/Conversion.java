@@ -23,10 +23,11 @@ public class Conversion {
 	@Id
 	@GeneratedValue
 	private Long transactionId;
+	
 	@NotNull(message = "rate is mandatory")
 	@ManyToOne
 	@JoinColumn
-	private Rate rate;
+	private RatePair ratePair;
 
 	@NotNull(message = "transactionDate is mandatory")
 	@Basic
@@ -49,12 +50,12 @@ public class Conversion {
 		this.transactionId = transactionId;
 	}
 
-	public Rate getRate() {
-		return rate;
+	public RatePair getRatePair() {
+		return ratePair;
 	}
 
-	public void setRate(Rate rate) {
-		this.rate = rate;
+	public void setRatePair(RatePair ratePair) {
+		this.ratePair = ratePair;
 	}
 
 	public Date getTransactionDate() {
@@ -85,7 +86,7 @@ public class Conversion {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((rate == null) ? 0 : rate.hashCode());
+		result = prime * result + ((ratePair == null) ? 0 : ratePair.hashCode());
 		result = prime * result + ((sourceAmount == null) ? 0 : sourceAmount.hashCode());
 		result = prime * result + ((targetAmount == null) ? 0 : targetAmount.hashCode());
 		result = prime * result + ((transactionDate == null) ? 0 : transactionDate.hashCode());
@@ -102,10 +103,10 @@ public class Conversion {
 		if (getClass() != obj.getClass())
 			return false;
 		Conversion other = (Conversion) obj;
-		if (rate == null) {
-			if (other.rate != null)
+		if (ratePair == null) {
+			if (other.ratePair != null)
 				return false;
-		} else if (!rate.equals(other.rate))
+		} else if (!ratePair.equals(other.ratePair))
 			return false;
 		if (sourceAmount == null) {
 			if (other.sourceAmount != null)
@@ -132,7 +133,9 @@ public class Conversion {
 
 	@Override
 	public String toString() {
-		return "Conversion [transactionId=" + transactionId + ", rate=" + rate + ", transactionDate=" + transactionDate + ", sourceAmount=" + sourceAmount + ", targetAmount=" + targetAmount + "]";
+		return "Conversion [transactionId=" + transactionId + ", ratePair=" + ratePair + ", transactionDate=" + transactionDate + ", sourceAmount=" + sourceAmount + ", targetAmount=" + targetAmount
+				+ "]";
 	}
+
 
 }
