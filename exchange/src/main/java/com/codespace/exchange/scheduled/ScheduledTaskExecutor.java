@@ -18,7 +18,7 @@ public class ScheduledTaskExecutor {
 
 	private static final Logger logger = LoggerFactory.getLogger(ScheduledTaskExecutor.class);
 
-	private static final int INTERVAL = 300000;
+	private static final int INTERVAL = 900000;
 
 	@Autowired
 	ExchangeRateProvider exchangeRateProvider;
